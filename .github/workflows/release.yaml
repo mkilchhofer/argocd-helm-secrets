@@ -1,0 +1,21 @@
+name: Release
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  release:
+    name: Release container image
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Build the Docker image
+        run: docker build . --tag ghcr.io/${{ github.repository }}:${{ github.event.release.tag_name }}
+
+      - name: Push to Github registry
+        run: |
+          echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
+          docker push ghcr.io/${{ github.repository }}:${{ github.event.release.tag_name }}
