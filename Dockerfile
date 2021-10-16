@@ -15,6 +15,9 @@ RUN curl -fSSL https://github.com/mozilla/sops/releases/download/v${SOPS_VERSION
 RUN curl -fSSL https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl \
     -o /usr/local/bin/kubectl && chmod +x /usr/local/bin/kubectl
 
+ENV HELM_PLUGINS="/usr/local/share/helm/plugins"
+RUN mkdir -p ${HELM_PLUGINS} && \
+    helm plugin install --version ${HELM_SECRETS_VERSION} https://github.com/jkroepke/helm-secrets && \
+    mv /root/.local/share/helm/plugins/* ${HELM_PLUGINS}/
+
 USER 999
-ENV HELM_PLUGINS="/home/argocd/.local/share/helm/plugins/"
-RUN helm plugin install --version ${HELM_SECRETS_VERSION} https://github.com/jkroepke/helm-secrets
