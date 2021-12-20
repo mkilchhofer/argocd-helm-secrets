@@ -1,7 +1,7 @@
-FROM quay.io/argoproj/argocd:v2.1.7
+FROM quay.io/argoproj/argocd:v2.2.0
 
 ARG SOPS_VERSION="3.7.1"
-ARG HELM_SECRETS_VERSION="3.9.0"
+ARG HELM_SECRETS_VERSION="3.11.0"
 ARG KUBECTL_VERSION="1.21.4"
 
 USER root
@@ -17,7 +17,6 @@ RUN curl -fSSL https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kub
 
 ENV HELM_PLUGINS="/usr/local/share/helm/plugins"
 RUN mkdir -p ${HELM_PLUGINS} && \
-    helm plugin install --version ${HELM_SECRETS_VERSION} https://github.com/jkroepke/helm-secrets && \
-    mv /root/.local/share/helm/plugins/* ${HELM_PLUGINS}/
+    helm plugin install --version ${HELM_SECRETS_VERSION} https://github.com/jkroepke/helm-secrets
 
 USER 999
