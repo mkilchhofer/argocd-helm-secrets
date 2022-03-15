@@ -1,8 +1,8 @@
-FROM quay.io/argoproj/argocd:v2.2.3
+FROM quay.io/argoproj/argocd:v2.2.4
 
-ARG SOPS_VERSION="3.7.1"
-ARG HELM_SECRETS_VERSION="3.11.0"
-ARG KUBECTL_VERSION="1.21.4"
+ARG SOPS_VERSION="3.7.2"
+ARG HELM_SECRETS_VERSION="3.12.0"
+ARG KUBECTL_VERSION="1.22.7"
 
 USER root
 RUN apt-get update && \
